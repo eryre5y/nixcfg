@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, home, nur, inputs, nixpkgs, overlays, ... }:
 
 let
 
