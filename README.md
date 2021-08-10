@@ -16,3 +16,5 @@ nixos-install
 - NeoVim (myneovim)
 - Telegram (tdesktop)
 - Steam (steam)
+
+> i hate my life
