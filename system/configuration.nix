@@ -50,7 +50,8 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
       '';
-  };
+    };
+
   programs = {
     dconf.enable = true;
     bash = {
@@ -68,6 +69,7 @@ in
         ncfg = "sudo cp -r /etc/nixos/* ~/nixcfg/system && sudo cp -r ~/.config/nixpkgs/* ~/nixcfg/home-manager";
       };
     };
+    gnupg.agent.enable = true;
   };
   time.timeZone = "Europe/Moscow";
   sound.enable = true;
@@ -122,10 +124,10 @@ in
 
   environment.systemPackages = with pkgs; [ 
     # test
-    polybar
-    feh
-    rofi
-    maim
+    #polybar
+    #feh
+    #rofi
+    #maim
     bpytop
     brightnessctl
     xclip
@@ -138,6 +140,7 @@ in
     playerctl
     sakura
 
+    gnupg
     emacs
     tdesktop
     git
@@ -179,6 +182,7 @@ in
     blueman.enable = true;
     printing.enable = true;
     openssh.enable = true;
+    haveged.enable = true;
 
     xserver = {
       enable = true;
