@@ -1,3 +1,4 @@
+#OC: https://github.com/dan4ik605743/nix-config
 { config, pkgs, ... }:
 
 let
