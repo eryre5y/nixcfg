@@ -52,6 +52,12 @@ in
       '';
     };
 
+  virtualisation = {
+    virtualbox = {
+      host.enable = true;
+      #host.enableExtensionPack = true;
+    };
+  };
   programs = {
     dconf.enable = true;
     bash = {
@@ -150,7 +156,7 @@ in
     hello
     latte-dock
     htop
-    google-chrome
+    stable.google-chrome
     discord
     stable.steam
     firefox
@@ -227,7 +233,7 @@ in
     users.reimu = {
       isNormalUser = true;
       hashedPassword = "$5$W7lyoN9pWq2/BH9F$jXaIpFZy3L9NgqrZhK382rre.ljdmLlHzvKvVQ1s3VA";
-      extraGroups = [ "wheel" "audio" "video" ];
+      extraGroups = [ "wheel" "audio" "video" "vboxusers" ];
     };
   };
 }
