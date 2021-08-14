@@ -26,7 +26,7 @@ in
     homeDirectory = "/home/reimu";
     stateVersion = "21.05";
     packages = [
-      doom-emacs
+#      doom-emacs
     ];
     file.".emacs.d/init.el".text = ''
       (load "default.el")
