@@ -15,7 +15,8 @@
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f426867a-3663-4724-b59f-d1a7cf7d2ca9";
-      fsType = "f2fs";
+    fsType = "f2fs";
+    options = [ "rw" ];
     };
 
   fileSystems."/home" =

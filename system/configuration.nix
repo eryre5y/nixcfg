@@ -47,9 +47,9 @@ in
   nix = {
     package = pkgs.nixUnstable;
     autoOptimiseStore = true;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      '';
+#    extraOptions = ''
+#      experimental-features = nix-command flakes
+#      '';
     };
 
   virtualisation = {
@@ -60,7 +60,13 @@ in
   };
   programs = {
     dconf.enable = true;
-    bash = {
+    zsh = {
+      enable = true;
+      ohMyZsh = {
+        enable = true;
+        plugins = [ "git" ];
+        theme = "agnoster";
+      };
       shellAliases = {
         l = "ls -alh";
         ll = "ls -l";
@@ -83,6 +89,7 @@ in
 
   networking = {
     hostName = "nixos";
+    nameservers = [ "1.1.1.1" ];
     firewall.enable = false;
     dhcpcd.wait = "background";
     interfaces.wlp2s0.useDHCP = true;
@@ -96,6 +103,10 @@ in
   };
 
   hardware = {
+    opentabletdriver = {
+      enable = true;
+      daemon.enable = true;
+    };
     bluetooth.enable = true;
     pulseaudio = {
       enable = true;
@@ -107,8 +118,8 @@ in
       extraPackages = with pkgs; [ intel-media-driver vaapiVdpau libvdpau-va-gl ];
     };
     nvidia.prime = {
-      #sync.enable = true;
-      offload.enable = true;
+      sync.enable = true;
+      #offload.enable = true;
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
     };
@@ -127,6 +138,20 @@ in
       systemd-boot.enable = true;
     };
   };
+  
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    meslo-lg
+  noto-fonts
+  noto-fonts-cjk
+  noto-fonts-emoji
+  liberation_ttf
+  fira-code
+  fira-code-symbols
+  mplus-outline-fonts
+  dina-font
+  proggyfonts
+  ];
 
   environment.systemPackages = with pkgs; [ 
     # test
@@ -137,7 +162,7 @@ in
     bpytop
     brightnessctl
     xclip
-    jdk
+    openjdk8
     gparted
     pywal
     qbittorrent
@@ -146,6 +171,7 @@ in
     playerctl
     sakura
 
+    woeusb
     gnupg
     emacs
     tdesktop
@@ -156,7 +182,7 @@ in
     hello
     latte-dock
     htop
-    stable.google-chrome
+    google-chrome
     discord
     stable.steam
     firefox
@@ -179,16 +205,36 @@ in
     obs-studio
     neofetch
     glxinfo
+
+    # broken shit
+
+#    python39Packages.pip
+#    python39Packages.pynput
+    python38Full
+    piper
+    vk-messenger
+    appimage-run
+    vscode
+    xvidcore
+    
+    #birthday?
+    opentabletdriver
+
+    #anon
+    tor-browser-bundle-bin
+
     # scripts
     (pkgs.writeShellScriptBin "nvidia-offload" ''__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"'')
 ];
 
-  services = {
+services = {
     ratbagd.enable = true;
     blueman.enable = true;
     printing.enable = true;
     openssh.enable = true;
     haveged.enable = true;
+    tor.enable = true;
+    tor.client.enable = true;
 
     xserver = {
       enable = true;
@@ -228,12 +274,18 @@ in
     };
   };
 
+  systemd.services.bluetooth.serviceConfig.ExecStart = [
+    ""
+    "${pkgs.bluez}/libexec/bluetooth/bluetoothd --noplugin=avrcp"
+  ];
+
   users = {
     mutableUsers = false;
     users.reimu = {
       isNormalUser = true;
       hashedPassword = "$5$W7lyoN9pWq2/BH9F$jXaIpFZy3L9NgqrZhK382rre.ljdmLlHzvKvVQ1s3VA";
       extraGroups = [ "wheel" "audio" "video" "vboxusers" ];
+      shell = pkgs.zsh;
     };
   };
 }
