@@ -1,7 +1,7 @@
 ## Installation
 
 ```
-# thanks dan4ik605743 for motivation of learning nixos further(1)
+# thanks dan4ik605743 for motivation of learning nixos further
 
 nix-shell -p git nixFlakes
 git clone https://github.com/eryre5y/nixcfg ~/
