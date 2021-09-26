@@ -39,12 +39,25 @@ in
 #     ./home.nix
   ];
 #  home-manager = { users.reimu = (import ./home.nix {inherit config pkgs lib unstable;}); };
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = true;
+nixpkgs = {
+  overlays = 
+    let
+    # Change this to a rev sha to pin
+    moz-rev = "master";
+    moz-url = builtins.fetchTarball { url = "https://github.com/mozilla/nixpkgs-mozilla/archive/${moz-rev}.tar.gz";};
+    nightlyOverlay = (import "${moz-url}/firefox-overlay.nix");
+    in [
+    nightlyOverlay
+    ];
+    config = {
+      firefox.enablePlasmaBrowserIntegration = true;
+      allowUnfree = true;
+      allowBroken = true;
+    };
   };
 
   nix = {
+#    binaryCaches = [ "https://cache.nixos.org" "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
     package = pkgs.nixUnstable;
     autoOptimiseStore = true;
 #    extraOptions = ''
@@ -184,14 +197,13 @@ in
     htop
     google-chrome
     discord
-    stable.steam
+    steam
     firefox
     spotify
     pulseeffects-legacy
     atom
     minecraft
     remmina
-    lutris
     libsForQt5.qtstyleplugin-kvantum
     etcher
     vlc
@@ -205,8 +217,13 @@ in
     obs-studio
     neofetch
     glxinfo
+    krita
 
-    # broken shit
+    # nightly
+    latest.firefox-nightly-bin
+
+    # montage
+    kdenlive
 
 #    python39Packages.pip
 #    python39Packages.pynput
@@ -216,12 +233,18 @@ in
     appimage-run
     vscode
     xvidcore
-    
+    osu-lazer
+
     #birthday?
     opentabletdriver
 
     #anon
     tor-browser-bundle-bin
+
+    #emulator
+    wineWowPackages.full
+    lutris
+    playonlinux
 
     # scripts
     (pkgs.writeShellScriptBin "nvidia-offload" ''__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"'')

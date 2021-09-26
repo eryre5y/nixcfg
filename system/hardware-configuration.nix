@@ -14,13 +14,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/f426867a-3663-4724-b59f-d1a7cf7d2ca9";
-    fsType = "f2fs";
-    options = [ "rw" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/9ad63647-059b-4d17-b847-afe12a3fb355";
+    { device = "/dev/disk/by-uuid/1dc95823-e605-4a2a-aaab-3bd6b6047688";
       fsType = "f2fs";
     };
 
@@ -28,10 +22,10 @@
     { device = "/dev/disk/by-uuid/9AFC-E999";
       fsType = "vfat";
     };
-  fileSystems."/ntfs" =
-    { device = "/dev/sda4";
-      fsType = "ntfs"; 
-      options = [ "rw" "uid=1000"];
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/9ad63647-059b-4d17-b847-afe12a3fb355";
+      fsType = "f2fs";
     };
 
   swapDevices = [ ];
