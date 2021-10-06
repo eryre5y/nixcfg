@@ -234,6 +234,7 @@ nixpkgs = {
     vscode
     xvidcore
     osu-lazer
+    jetbrains.pycharm-community
 
     #birthday?
     opentabletdriver
