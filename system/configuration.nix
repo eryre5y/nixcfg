@@ -112,6 +112,7 @@ nixpkgs = {
       interfaces = [ "wlp2s0" ];
       networks."reimuware inc. v1.7".psk = "senpai_love_touhou";
       networks."covid_generator".psk = "LizzyMarie6";
+      networks."WiFi".psk = "19012011";
     };
   };
 
@@ -240,7 +241,7 @@ nixpkgs = {
     opentabletdriver
 
     #anon
-    tor-browser-bundle-bin
+#    tor-browser-bundle-bin
 
     #emulator
     wineWowPackages.full
@@ -267,7 +268,7 @@ services = {
       dpi = 96;
       displayManager = {
 #        sddm.enable = true;
-        defaultSession = "plasma5";
+        defaultSession = "plasma";
         lightdm.greeters.mini = {
           enable = true;
           user = "reimu";
