@@ -101,19 +101,20 @@ nixpkgs = {
   system.stateVersion = "20.03";
 
   networking = {
+    networkmanager.enable = true;
     hostName = "nixos";
-    nameservers = [ "1.1.1.1" ];
+#    nameservers = [ 1.1.1.1 ];
     firewall.enable = false;
     dhcpcd.wait = "background";
     interfaces.wlp2s0.useDHCP = true;
     interfaces.enp3s0.useDHCP = true;
-    wireless = {
-      enable = true;
-      interfaces = [ "wlp2s0" ];
-      networks."reimuware inc. v1.7".psk = "senpai_love_touhou";
-      networks."covid_generator".psk = "LizzyMarie6";
-      networks."WiFi".psk = "19012011";
-    };
+#    wireless = {
+#      enable = true;
+#      interfaces = [ "wlp2s0" ];
+#      networks."reimuware inc. v1.7".psk = "senpai_love_touhou";
+#      networks."covid_generator".psk = "LizzyMarie6";
+#      networks."WiFi".psk = "19012011";
+#    };
   };
 
   hardware = {
@@ -176,7 +177,7 @@ nixpkgs = {
     bpytop
     brightnessctl
     xclip
-    openjdk8
+    jdk11
     gparted
     pywal
     qbittorrent
@@ -214,14 +215,15 @@ nixpkgs = {
     exodus
     adoptopenjdk-jre-openj9-bin-8
     leafpad
-    noisetorch
+    stable.noisetorch
     obs-studio
     neofetch
     glxinfo
     krita
+    libreoffice-qt
 
     # nightly
-    latest.firefox-nightly-bin
+#    latest.firefox-nightly-bin
 
     # montage
     kdenlive
@@ -236,12 +238,17 @@ nixpkgs = {
     xvidcore
     osu-lazer
     jetbrains.pycharm-community
+    openssl
 
     #birthday?
     opentabletdriver
 
     #anon
-#    tor-browser-bundle-bin
+    tor-browser-bundle-bin
+    monero-gui
+    obfs4
+    element
+    element-desktop
 
     #emulator
     wineWowPackages.full
@@ -258,9 +265,11 @@ services = {
     printing.enable = true;
     openssh.enable = true;
     haveged.enable = true;
-    tor.enable = true;
-    tor.client.enable = true;
-
+    tor = {
+      enable = true;
+      client.enable = true;
+    };
+    
     xserver = {
       enable = true;
       videoDrivers = [ "nvidia" ];
