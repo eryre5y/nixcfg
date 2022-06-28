@@ -53,6 +53,9 @@ nixpkgs = {
       firefox.enablePlasmaBrowserIntegration = true;
       allowUnfree = true;
       allowBroken = true;
+      permittedInsecurePackages = [
+        "electron-12.2.3"
+      ];
     };
   };
 
@@ -98,7 +101,7 @@ nixpkgs = {
   };
   time.timeZone = "Europe/Moscow";
   sound.enable = true;
-  system.stateVersion = "20.03";
+  system.stateVersion = "22.05";
 
   networking = {
     networkmanager.enable = true;
@@ -123,10 +126,6 @@ nixpkgs = {
       daemon.enable = true;
     };
     bluetooth.enable = true;
-    pulseaudio = {
-      enable = true;
-      support32Bit = true;
-    };
     opengl = {
       enable = true;
       driSupport32Bit = true;
@@ -154,20 +153,6 @@ nixpkgs = {
     };
   };
   
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-    meslo-lg
-  noto-fonts
-  noto-fonts-cjk
-  noto-fonts-emoji
-  liberation_ttf
-  fira-code
-  fira-code-symbols
-  mplus-outline-fonts
-  dina-font
-  proggyfonts
-  ];
-
   environment.systemPackages = with pkgs; [ 
     # test
     #polybar
@@ -194,15 +179,12 @@ nixpkgs = {
     nodejs
     myneovim
     vim
-    hello
-    latte-dock
     htop
-    google-chrome
     discord
     steam
     firefox
     spotify
-    pulseeffects-legacy
+    easyeffects
     atom
     minecraft
     remmina
@@ -230,9 +212,8 @@ nixpkgs = {
 
 #    python39Packages.pip
 #    python39Packages.pynput
-    python38Full
+    python39Full
     piper
-    vk-messenger
     appimage-run
     vscode
     xvidcore
@@ -259,7 +240,14 @@ nixpkgs = {
     (pkgs.writeShellScriptBin "nvidia-offload" ''__NV_PRIME_RENDER_OFFLOAD=1 __VK_LAYER_NV_optimus=NVIDIA_only __GLX_VENDOR_LIBRARY_NAME=nvidia "$@"'')
 ];
 
+security.rtkit.enable = true;
 services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
     ratbagd.enable = true;
     blueman.enable = true;
     printing.enable = true;
@@ -280,7 +268,7 @@ services = {
         defaultSession = "plasma";
         lightdm.greeters.mini = {
           enable = true;
-          user = "reimu";
+          user = "sunny";
           extraConfig = ''
             [greeter]
             show-password-label = false
@@ -315,9 +303,9 @@ services = {
 
   users = {
     mutableUsers = false;
-    users.reimu = {
+    users.sunny = {
       isNormalUser = true;
-      hashedPassword = "$5$W7lyoN9pWq2/BH9F$jXaIpFZy3L9NgqrZhK382rre.ljdmLlHzvKvVQ1s3VA";
+      hashedPassword = "$6$GttDULnmoRZKrHqM$XTann7Vva/1MoyYW9.cLQBxLKxopDzO4.6YI8XnC//wkVE.iF7nqUgOpKpc6Wrk/YWW4AdP2kmT0Y60JIWlW11";
       extraGroups = [ "wheel" "audio" "video" "vboxusers" ];
       shell = pkgs.zsh;
     };
